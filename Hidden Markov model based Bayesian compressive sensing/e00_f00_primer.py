@@ -322,22 +322,22 @@ class HMM_Module_M():
         pass;
     def initGlobalParams(self):
         self.step=1
-        self.q_global_p01_alpha = self.m_str*(0.1 if self.initParams is None else self.initParams['p01'])
-        self.q_global_p01_beta = self.m_str*(1-(0.1 if self.initParams is None else self.initParams['p01']))
-        self.q_global_p10_alpha = self.m_str*(0.9 if self.initParams is None else self.initParams['p10'])
-        self.q_global_p10_beta = self.m_str*(1-(0.9 if self.initParams is None else self.initParams['p10']))
+        self.q_global_p01_alpha = alpha01i = self.m_str*(0.1 if self.initParams is None else self.initParams['p01'])
+        self.q_global_p01_beta = beta01i = self.m_str*(1-(0.1 if self.initParams is None else self.initParams['p01']))
+        self.q_global_p10_alpha = alpha10i = self.m_str*(0.9 if self.initParams is None else self.initParams['p10'])
+        self.q_global_p10_beta = beta10i = self.m_str*(1-(0.9 if self.initParams is None else self.initParams['p10']))
         self.alpha0 = alphaInits[0] if self.initParams is None else self.initParams['alpha0']
         self.beta0 = 1e-5*alphaInits[0] if self.initParams is None else self.initParams['beta0']
         self.alpha1 = alphaInits[1] if self.initParams is None else self.initParams['alpha1']
         temp_beta1 = 5.0*alphaInits[1] if self.initParams is None else self.initParams['beta1']
         self.alphaz = alphaInits[2] if self.initParams is None else self.initParams['alphaz']
-        temp_betaz = (1/1e+1)*alphaInits[2] if self.initParams is None else self.initParams['betaz']
+        temp_betaz = (1/1e-2)*alphaInits[2] if self.initParams is None else self.initParams['betaz']
         # learnable beta1 with Gamma distribution
-        self.q_global_beta1_beta = self.m_str*1.0
-        self.q_global_beta1_alpha = self.q_global_beta1_beta * temp_beta1;
+        self.q_global_beta1_beta = alpha1i = self.m_str*1.0
+        self.q_global_beta1_alpha = beta1i = self.q_global_beta1_beta * temp_beta1;
         # learnable betaz with Gamma distribution
-        self.q_global_betaz_beta = self.m_str;
-        self.q_global_betaz_alpha = self.q_global_betaz_beta * temp_betaz;
+        self.q_global_betaz_beta = betazi = self.m_str;
+        self.q_global_betaz_alpha = alphazi = self.q_global_betaz_beta * temp_betaz;
     def getParamsDict(self):
         if not hasattr(self, 'params_curr'):
             self.params_curr = {'type':'BAYESIAN_ESTIMATE'};
